@@ -131,11 +131,59 @@ h2{margin:20px 0 10px;font-size:1.3rem}
 .tw:hover .t{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.6),inset 1px 0 0 rgba(255,255,255,.2),inset -1px 0 0 rgba(0,0,0,.08),inset 0 -4px 0 rgba(0,0,0,.16),0 7px 12px rgba(16,26,46,.26),0 1px 1px rgba(16,26,46,.28)}
 .tw:active .t{transform:translateY(2px);box-shadow:inset 0 2px 3px rgba(0,0,0,.2),0 1px 1px rgba(16,26,46,.25)}
 @media (prefers-reduced-motion:reduce){.tw .t{transition:none}.tw:active .t{transform:none}}
+
+/* ===== Премиальное стекло (Premium Glass UI) для плиток изданий ===== */
+:root{--glass-blur:24px}
+.grid .tw .t{color:#0D1B2A;isolation:isolate;
+--gA:hsl(var(--h) 88% calc(var(--l) + 3%) / .92);--gB:hsl(var(--h) 76% calc(var(--l) - 9%) / .94);
+background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 38%,rgba(10,20,50,.12) 100%),linear-gradient(145deg,var(--gA),var(--gB));
+-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(160%);backdrop-filter:blur(var(--glass-blur)) saturate(160%);
+border:1px solid hsl(var(--h) 55% 30% / .38);
+box-shadow:inset 0 1px 1px rgba(255,255,255,.95),inset 0 -1px 1px rgba(10,20,50,.22),inset 0 9px 14px -8px rgba(255,255,255,.55),inset 0 -8px 12px -6px rgba(10,20,50,.22),0 1px 0 rgba(255,255,255,.35),0 2px 3px rgba(16,26,46,.20),0 10px 20px -4px rgba(16,26,46,.24),0 22px 36px -12px rgba(16,26,46,.26);
+transition:transform .15s,box-shadow .15s}
+/* блик: мягкое свечение верхней половины и диагональная полоса */
+.grid .tw .t::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+background:linear-gradient(118deg,rgba(255,255,255,0) 0 30%,rgba(255,255,255,.38) 35%,rgba(255,255,255,.12) 43%,rgba(255,255,255,0) 51%),linear-gradient(180deg,rgba(255,255,255,.46) 0%,rgba(255,255,255,.14) 34%,rgba(255,255,255,0) 54%);transition:filter .2s}
+/* полированная фаска по периметру */
+.grid .tw .t::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:2px;
+background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.28) 26%,rgba(255,255,255,0) 48%,rgba(255,255,255,.16) 74%,rgba(255,255,255,.75) 100%);
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.grid .tw:hover .t::before{filter:brightness(1.18)}
+.grid .tw:hover .t{box-shadow:inset 0 1px 1px #fff,inset 0 -1px 1px rgba(10,20,50,.22),inset 0 9px 14px -8px rgba(255,255,255,.7),inset 0 -8px 12px -6px rgba(10,20,50,.22),0 1px 0 rgba(255,255,255,.4),0 3px 5px rgba(16,26,46,.22),0 16px 28px -4px rgba(16,26,46,.28),0 30px 48px -14px rgba(16,26,46,.30)}
+.grid .tw:active .t{transform:translateY(1px);box-shadow:inset 0 2px 6px rgba(10,20,50,.18),inset 0 1px 1px rgba(255,255,255,.7),0 3px 8px rgba(16,26,46,.18)}
+.grid .tw .t .rg{display:none;position:absolute;top:14px;left:16px;right:46px;font:600 12px/1.2 var(--b);color:rgba(13,27,42,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid .tw .t .lg:empty{display:none}
+.grid .tw .t .n{color:#0D1B2A}
+.grid .tw .t .c{color:rgba(13,27,42,.74);opacity:1}
+.grid .tw .t .publication-mark{background:rgba(255,255,255,.94);box-shadow:inset 0 1px 0 #fff,inset 0 -2px 4px rgba(10,20,50,.05),0 1px 2px rgba(10,20,50,.22),0 3px 8px -2px rgba(10,20,50,.16)}
+.grid .tw .t .m:not(.publication-mark){background:rgba(255,255,255,.94);color:hsl(var(--h) 60% 32%);box-shadow:inset 0 1px 0 #fff,inset 0 -2px 4px rgba(10,20,50,.05),0 1px 2px rgba(10,20,50,.22),0 3px 8px -2px rgba(10,20,50,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grid .tw .t{--gA:hsl(var(--h) 90% calc(var(--l) + 12%) / .94);--gB:hsl(var(--h) 80% calc(var(--l) + 3%) / .95)}}
+:root[data-theme="dark"] .grid .tw .t{--gA:hsl(var(--h) 90% calc(var(--l) + 12%) / .94);--gB:hsl(var(--h) 80% calc(var(--l) + 3%) / .95)}
+.hero .logo{cursor:pointer;-webkit-tap-highlight-color:transparent}.hero .logo:hover{background:#E8F5FD}.hero .logo:focus-visible{outline:none;background:#fff}
+@media (min-width:701px){
+.grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.grid .tw .t{min-height:196px;padding:44px 14px 14px;gap:10px;justify-content:flex-start;border-radius:20px}
+.grid .tw .t .rg{display:block}
+.grid .tw .t>.m{display:grid;place-items:center;width:100%;height:72px;border-radius:12px;font-size:2rem}
+.grid .tw .t>.publication-mark{display:flex;height:72px;padding:8px 14px;border-radius:12px}
+.grid .tw .t:has(.publication-mark){min-height:196px;gap:10px}
+.grid .tw .t>span:last-child{margin-top:auto}
+.grid .tw .t .n{font:700 18px/1.15 var(--b);letter-spacing:-.01em}
+.grid .tw .t .c,.grid .tw .t:has(.publication-mark) .c{font-size:13px;margin-top:3px;padding-right:46px}
+.grid .tw .t .lg{top:auto;left:auto;bottom:14px;right:14px;padding:3px 10px;font:500 12px/1.3 var(--b);border:1px solid rgba(13,27,42,.34);border-radius:100px;background:rgba(255,255,255,.14);color:#0D1B2A;opacity:1}
+}
+@media (max-width:700px){
+:root{--glass-blur:12px}
+.grid .tw .t{border-radius:16px;box-shadow:inset 0 1px 1px rgba(255,255,255,.95),inset 0 -1px 1px rgba(10,20,50,.22),inset 0 7px 10px -6px rgba(255,255,255,.55),inset 0 -6px 9px -5px rgba(10,20,50,.22),0 2px 3px rgba(16,26,46,.20),0 8px 14px -4px rgba(16,26,46,.24)}
+.grid .tw .t::after{padding:1.5px}
+.grid .tw .t .lg{border-color:rgba(13,27,42,.34)}
+.grid .tw .t .m:not(.publication-mark){border-radius:12px}
+}
 </style>
 <script>try{var m=localStorage.getItem('natw:theme');if(m==='dark'||m==='light')document.documentElement.dataset.theme=m}catch(e){}</script></head>
 <body>
 <div class="hero"><div class="wrap">
-<header><div class="hd"><div class="logo" role="img" aria-label="News Around The World"></div><div><h1>News Around The World</h1><p class="sub" id="sub"></p></div></div><div class="hr"><select id="lg" aria-label="Language"></select><button class="tg" id="tg" type="button"></button></div></header>
+<header><div class="hd"><div class="logo" role="button" tabindex="0" aria-label="News Around The World"></div><div><h1>News Around The World</h1><p class="sub" id="sub"></p></div></div><div class="hr"><select id="lg" aria-label="Language"></select><button class="tg" id="tg" type="button"></button></div></header>
 </div></div>
 <div class="bar"><div class="wrap">
 <div class="row"><input id="q" type="search" placeholder="Найти издание или страну" aria-label="Поиск"><select id="k" aria-label="Страна"></select><select id="l" aria-label="Язык"></select><select id="t" aria-label="Тип"></select><select id="g" aria-label="Группировка"><option value="c">Группы: континенты</option><option value="k">Группы: страны</option></select></div>
@@ -204,7 +252,7 @@ const th=()=>{const r=document.documentElement;return r.dataset.theme?r.dataset.
 function opts(el,all,list,cur){el.innerHTML='<option value="">'+esc(all)+'</option>'+list.map(([v,n])=>'<option value="'+esc(v)+'">'+esc(n)+'</option>').join('');el.setAttribute('aria-label',all);el.value=cur}
 function fill(){opts($('#k'),T.ak,[...new Set(D.filter(r=>!S.c||r[1]===S.c).map(r=>r[2]))].map(v=>[v,ky(v)]).sort((a,b)=>a[1].localeCompare(b[1],L)),S.k)}
 function tile(r){const h=H[r[1]]||210,l=hs(r[0]),f=FAV.includes(r[6]),c=ky(r[2]),ak=S.v==='rad'?'listen':S.v==='tv'?'watch':'',act=ak?'<span class="c" style="display:block;font-weight:600;opacity:.95;margin-top:2px">▶ '+esc(XT[ak][L])+'</span>':'';
-return '<div class="tw" data-u="'+esc(r[6])+'"><button class="fv" type="button" aria-pressed="'+f+'" aria-label="'+esc((f?T.rm:T.af)+': '+r[0])+'" title="'+esc(f?T.rm:T.af)+'">'+STAR+'</button><a class="t" href="'+esc((CL[S.v]&&CL[S.v][r[6]])||r[6])+'" target="_blank" rel="noopener noreferrer" style="--h:'+h+';--l:calc(var(--tl) + '+(l%11)+'%)" title="'+esc(r[0]+', '+c+(r[5]==='Государственное'?', '+T.so:''))+'">'+publicationMark(r)+'<span class="lg">'+(LG[r[3]]||'')+'</span><span><span class="n">'+esc(r[0])+'</span><span class="c" style="display:block">'+esc(c)+'</span>'+act+'</span></a></div>'}
+return '<div class="tw" data-u="'+esc(r[6])+'"><button class="fv" type="button" aria-pressed="'+f+'" aria-label="'+esc((f?T.rm:T.af)+': '+r[0])+'" title="'+esc(f?T.rm:T.af)+'">'+STAR+'</button><a class="t" href="'+esc((CL[S.v]&&CL[S.v][r[6]])||r[6])+'" target="_blank" rel="noopener noreferrer" style="--h:'+h+';--l:calc(var(--tl) + '+(l%11)+'%)" title="'+esc(r[0]+', '+c+(r[5]==='Государственное'?', '+T.so:''))+'">'+'<span class="rg">'+esc(cn(r[1]))+'</span>'+publicationMark(r)+'<span class="lg">'+(LG[r[3]]||'')+'</span><span><span class="n">'+esc(r[0])+'</span><span class="c" style="display:block">'+esc(c)+'</span>'+act+'</span></a></div>'}
 function upd(){document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===S.v)));$('#nf').textContent=FAV.length;Object.keys(CAT).forEach(k=>{const b=$('[data-v="'+k+'"] small');if(b)b.textContent=CS[k].size});$('#nr').textContent=REC.length;$('#clr').hidden=!(S.v==='rec'&&REC.length)}
 function render(){const q=S.q.trim().toLowerCase();
 const base=S.v==='fav'?D.filter(r=>FAV.includes(r[6])):S.v==='rec'?REC.map(u=>U.get(u)):CS[S.v]?D.filter(r=>CS[S.v].has(r[6])):D;
@@ -241,6 +289,8 @@ $('#out').onauxclick=e=>{const a=e.target.closest('a.t');if(a&&e.button===1)rec(
 ['k','l','t','g'].forEach(i=>$('#'+i).onchange=e=>{S[i]=e.target.value;render()});
 const resetF=()=>{Object.assign(S,{q:'',c:'',k:'',l:'',t:''});$('#q').value='';$('#l').value='';$('#t').value='';fill();render()};
 $('#rs').onclick=resetF;
+const goHome=()=>{Object.assign(S,{q:'',c:'',k:'',l:'',t:'',g:'c',v:''});$('#q').value='';$('#l').value='';$('#t').value='';$('#g').value='c';fill();render();document.querySelectorAll('.bar .row').forEach(r=>{r.scrollLeft=0});if(document.activeElement&&document.activeElement.blur&&document.activeElement.id==='q')document.activeElement.blur();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})};
+{const lg=document.querySelector('.hero .logo');lg.onclick=goHome;lg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goHome()}}}
 $('#tg').onclick=()=>{const d=th();document.documentElement.dataset.theme=d?'light':'dark';try{localStorage.setItem('natw:theme',d?'light':'dark')}catch(x){}$('#tg').textContent=d?T.dk:T.lt};
 setL(pick());apply();
 
