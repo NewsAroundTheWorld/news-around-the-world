@@ -223,16 +223,33 @@ background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.28)
 [dir=rtl] .rs+.rs{margin-left:0;margin-right:14px}
 @media (min-width:701px){[dir=rtl] .fv{right:auto;left:13px}[dir=rtl] .grid .tw .t .lg{left:auto;right:15px}}
 @media (max-width:700px){[dir=rtl] .fv{right:auto;left:10px}[dir=rtl] .grid .tw .t .lg{left:auto;right:10px}}
+
+/* ===== v4: поиск и фильтры в одной строке на фото ===== */
+.hq{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hs .hq input{flex:1 1 220px;width:auto;max-width:340px}
+.hq select{flex:0 1 auto;height:46px;max-width:200px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background-color:rgba(255,255,255,.95);color:#121A2B;font:500 15px var(--b);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+@media (max-width:700px){.hq{gap:8px}.hs .hq input{flex:1 1 100%;max-width:none}.hq select{flex:1 1 0;min-width:0;height:40px;max-width:none;padding:0 10px;font-size:14px}}
+
+/* ===== v5: всё в hero, одна строка заголовка и кнопок ===== */
+@media (min-width:701px){
+.hero header{flex-wrap:wrap}
+.hero h1{font-size:clamp(1.7rem,3.3vw,3.1rem);max-width:none;white-space:nowrap}
+.hr{flex-wrap:nowrap;flex:none}
+.hr>*{flex:none;white-space:nowrap}
+}
+.hs .hq input,.hq select{height:40px;font-size:14px;font-weight:600;padding:0 16px;box-shadow:none}
+.hs .hq input{flex:1 1 200px;max-width:300px;font-weight:500}
+.hero .tab{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hero .tab small{color:#fff;opacity:.8}
+.hero .tab[aria-pressed="true"]{background:#fff;color:#0C243C;border-color:#fff}
+.hero .tab[aria-pressed="true"] small{color:inherit}
+@media (max-width:700px){.hero .tabsrow{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px;padding:2px 14px;scrollbar-width:none}.hero .tabsrow::-webkit-scrollbar{display:none}.hero .tabsrow .tab{flex:none}}
 </style>
 <script>try{var m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('natw:theme');if(m==='dark'||m==='light')document.documentElement.dataset.theme=m}catch(e){}</script></head>
 <body>
 <div class="hero"><div class="wrap">
 <header><div class="hd"><div class="logo" role="button" tabindex="0" aria-label="News Around The World"></div><div><h1>News Around The World</h1><p class="sub" id="sub"></p></div></div><div class="hr"><select id="lg" aria-label="Language"></select><button class="tg" id="tg" type="button"></button><button class="tg" id="sh" type="button" aria-live="polite"></button></div></header>
-<div class="hs"><input id="q" type="search" placeholder="Найти издание или страну" aria-label="Поиск"><div class="row" id="ch" role="group" aria-label="Континенты"></div></div>
-</div></div>
-<div class="bar"><div class="wrap">
-<div class="row"><select id="k" aria-label="Страна"></select><select id="l" aria-label="Язык"></select><select id="t" aria-label="Тип"></select></div>
-<div class="row"><div class="vw" id="vw" role="group"><span class="pin"><button class="tab" type="button" data-v="fav" aria-pressed="false">Избранное <small id="nf">0</small></button><button class="tab" type="button" data-v="rec" aria-pressed="false">Недавно посещённые <small id="nr">0</small></button></span><button class="tab" type="button" data-v="pol" aria-pressed="false">Новости политики <small>0</small></button><button class="tab" type="button" data-v="mil" aria-pressed="false">Военные издания <small>0</small></button><button class="tab" type="button" data-v="sci" aria-pressed="false">Новости науки <small>0</small></button><button class="tab" type="button" data-v="art" aria-pressed="false">Новости искусства <small>0</small></button><button class="tab" type="button" data-v="rad" aria-pressed="false">Интернет-радио <small>0</small></button><button class="tab" type="button" data-v="tv" aria-pressed="false">Интернет-телевидение <small>0</small></button></div></div>
+<div class="hs"><div class="hq"><input id="q" type="search" placeholder="Найти издание или страну" aria-label="Поиск"><select id="k" aria-label="Страна"></select><select id="l" aria-label="Язык"></select><select id="t" aria-label="Тип"></select></div><div class="row" id="ch" role="group" aria-label="Континенты"></div><div class="row tabsrow"><div class="vw" id="vw" role="group"><span class="pin"><button class="tab" type="button" data-v="fav" aria-pressed="false">Избранное <small id="nf">0</small></button><button class="tab" type="button" data-v="rec" aria-pressed="false">Недавно посещённые <small id="nr">0</small></button></span><button class="tab" type="button" data-v="pol" aria-pressed="false">Новости политики <small>0</small></button><button class="tab" type="button" data-v="mil" aria-pressed="false">Военные издания <small>0</small></button><button class="tab" type="button" data-v="sci" aria-pressed="false">Новости науки <small>0</small></button><button class="tab" type="button" data-v="art" aria-pressed="false">Новости искусства <small>0</small></button><button class="tab" type="button" data-v="rad" aria-pressed="false">Интернет-радио <small>0</small></button><button class="tab" type="button" data-v="tv" aria-pressed="false">Интернет-телевидение <small>0</small></button></div></div></div>
 </div></div>
 <main class="wrap"><div class="info"><span id="cnt"></span><span><button class="rs" id="clr" type="button" hidden>Очистить историю</button><button class="rs" id="rs" type="button" hidden>Сбросить фильтры</button></span></div><div id="out"></div>
 <footer id="ft"></footer></main>
