@@ -252,13 +252,38 @@ background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.28)
 .hr .tg{flex:0 1 auto;min-width:0;padding:6px 10px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
 @media (max-width:700px){.hq select{padding:0 4px 0 10px;font-size:13px}}
+
+/* ===== v7: закреплённая строка поиска/фильтров и кнопка «наверх» ===== */
+.sbar{position:fixed;top:0;left:0;right:0;z-index:20;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));background:var(--panel);background:color-mix(in srgb,var(--panel) 90%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 6px 20px rgba(0,0,0,.14);transform:translateY(-110%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
+.sbar.on{transform:none;visibility:visible;transition:transform .25s ease}
+.sbar .hq input,.sbar .hq select{height:38px;font-size:14px;border:1px solid var(--line);background-color:var(--panel);color:var(--ink);box-shadow:none}
+.sbar .hq input{flex:1 1 220px;max-width:340px;padding:0 16px;border-radius:999px}
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:21;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.totop[hidden]{display:none}
+.totop:hover{border-color:var(--ink)}
+[dir=rtl] .totop{right:auto;left:max(16px,env(safe-area-inset-left))}
+@media (max-width:700px){.sbar{padding-bottom:6px}.sbar .hq{gap:6px}.sbar .hq input{flex:1 1 100%;max-width:none;height:36px}.sbar .hq select{height:34px;flex:1 1 0;min-width:0;max-width:none;padding:0 4px 0 10px;font-size:13px}}
+@media (prefers-reduced-motion:reduce){.sbar,.sbar.on{transition:none}}
+
+/* ===== v8: строка в стиле шапки: тёмная полоска фото Земли + эмблема ===== */
+.sbar{background:linear-gradient(90deg,rgba(4,9,22,.9),rgba(4,9,22,.78) 55%,rgba(4,9,22,.62)),var(--hero) 70% 30%/cover no-repeat;border-bottom:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:none;backdrop-filter:none}
+[dir=rtl] .sbar{background:linear-gradient(270deg,rgba(4,9,22,.9),rgba(4,9,22,.78) 55%,rgba(4,9,22,.62)),var(--hero) 30% 30%/cover no-repeat}
+.sbar .wrap{display:flex;align-items:center;gap:12px}
+.sbar .hq{flex:1 1 auto;min-width:0}
+.sbar .hq input,.sbar .hq select{background-color:rgba(255,255,255,.95);color:#121A2B;border:1px solid rgba(255,255,255,.5)}
+.sbar .hq input::placeholder{color:#566178}
+.sb-logo{flex:none;width:36px;height:36px;padding:0;border:0;cursor:pointer;background:#cfe9f8;-webkit-mask:var(--lm) center/contain no-repeat;mask:var(--lm) center/contain no-repeat}
+.sb-logo:hover,.sb-logo:focus-visible{background:#fff}
+@media (max-width:700px){.sb-logo{display:none}}
 </style>
 <script>try{var m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('natw:theme');if(m==='dark'||m==='light')document.documentElement.dataset.theme=m}catch(e){}</script></head>
 <body>
 <div class="hero"><div class="wrap">
 <header><div class="hd"><div class="logo" role="button" tabindex="0" aria-label="News Around The World"></div><div><h1>News Around The World</h1><p class="sub" id="sub"></p></div></div><div class="hr"><select id="lg" aria-label="Language"></select><button class="tg" id="tg" type="button"></button><button class="tg" id="sh" type="button" aria-live="polite"></button></div></header>
-<div class="hs"><div class="hq"><input id="q" type="search" placeholder="Найти издание или страну" aria-label="Поиск"><select id="k" aria-label="Страна"></select><select id="l" aria-label="Язык"></select><select id="t" aria-label="Тип"></select></div><div class="row" id="ch" role="group" aria-label="Континенты"></div><div class="row tabsrow"><div class="vw" id="vw" role="group"><span class="pin"><button class="tab" type="button" data-v="fav" aria-pressed="false">Избранное <small id="nf">0</small></button><button class="tab" type="button" data-v="rec" aria-pressed="false">Недавно посещённые <small id="nr">0</small></button></span><button class="tab" type="button" data-v="pol" aria-pressed="false">Новости политики <small>0</small></button><button class="tab" type="button" data-v="mil" aria-pressed="false">Военные СМИ <small>0</small></button><button class="tab" type="button" data-v="sci" aria-pressed="false">Новости науки <small>0</small></button><button class="tab" type="button" data-v="art" aria-pressed="false">Новости искусства <small>0</small></button><button class="tab" type="button" data-v="rad" aria-pressed="false">Интернет-радио <small>0</small></button><button class="tab" type="button" data-v="tv" aria-pressed="false">Интернет-телевидение <small>0</small></button></div></div></div>
+<div class="hs"><div class="hqs" id="hqs"><div class="hq"><input id="q" type="search" placeholder="Найти издание или страну" aria-label="Поиск"><select id="k" aria-label="Страна"></select><select id="l" aria-label="Язык"></select><select id="t" aria-label="Тип"></select></div></div><div class="row" id="ch" role="group" aria-label="Континенты"></div><div class="row tabsrow"><div class="vw" id="vw" role="group"><span class="pin"><button class="tab" type="button" data-v="fav" aria-pressed="false">Избранное <small id="nf">0</small></button><button class="tab" type="button" data-v="rec" aria-pressed="false">Недавно посещённые <small id="nr">0</small></button></span><button class="tab" type="button" data-v="pol" aria-pressed="false">Новости политики <small>0</small></button><button class="tab" type="button" data-v="mil" aria-pressed="false">Военные СМИ <small>0</small></button><button class="tab" type="button" data-v="sci" aria-pressed="false">Новости науки <small>0</small></button><button class="tab" type="button" data-v="art" aria-pressed="false">Новости искусства <small>0</small></button><button class="tab" type="button" data-v="rad" aria-pressed="false">Интернет-радио <small>0</small></button><button class="tab" type="button" data-v="tv" aria-pressed="false">Интернет-телевидение <small>0</small></button></div></div></div>
 </div></div>
+<div class="sbar" id="sbar"><div class="wrap"><button class="sb-logo" type="button"></button></div></div>
+<button class="totop" id="totop" type="button" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <main class="wrap"><div class="info"><span id="cnt"></span><span><button class="rs" id="clr" type="button" hidden>Очистить историю</button><button class="rs" id="rs" type="button" hidden>Сбросить фильтры</button></span></div><div id="out"></div>
 <footer id="ft"></footer></main>
 <script>
@@ -279,6 +304,7 @@ const S={q:'',c:'',k:'',l:'',t:'',g:'c',v:''};
 const PV_ROWS=2,OPEN=new Set();let COLL=false;
 const nz=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').replace(/ø/g,'o').replace(/đ/g,'d').replace(/ß/g,'ss').toLowerCase();
 const SHT={ru:['Поделиться','Ссылка скопирована'],en:['Share','Link copied'],zh:['分享','链接已复制'],hi:['साझा करें','लिंक कॉपी हुआ'],es:['Compartir','Enlace copiado'],fr:['Partager','Lien copié'],ar:['مشاركة','تم نسخ الرابط'],bn:['শেয়ার','লিংক কপি হয়েছে'],pt:['Compartilhar','Link copiado'],ur:['شیئر کریں','لنک کاپی ہو گیا'],id:['Bagikan','Tautan disalin'],de:['Teilen','Link kopiert']};
+const TOPT={ru:'Наверх',en:'Back to top',zh:'回到顶部',hi:'ऊपर जाएँ',es:'Ir arriba',fr:'Haut de page',ar:'إلى الأعلى',bn:'উপরে যান',pt:'Voltar ao topo',ur:'اوپر جائیں',id:'Ke atas',de:'Nach oben'};
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const UC={c:v=>slug(CT.en[Object.keys(H).indexOf(v)]||v),k:v=>IS[v]||v,l:v=>LC[v]||v,t:v=>TY[v]||v},UI={c:1,k:2,l:3,t:4};
 const dec=(f,p)=>(D.find(r=>UC[f](r[UI[f]])===p)||[])[UI[f]]||'';
@@ -360,7 +386,7 @@ document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',Stri
 function apply(){document.documentElement.lang=L;$('#lg').value=L;
 {const s=fmt(T.sub,{n:D.length}),i=s.search(/[:：]/),e=$('#sub');e.textContent='';if(i<0)e.textContent=s;else{e.append(s.slice(0,i+1),document.createElement('br'),s.slice(i+1).trim())}}
 $('#q').placeholder=T.ph;$('#q').setAttribute('aria-label',T.ph);
-$('#sh').textContent=SHT[L][0];document.documentElement.dir=(L==='ar'||L==='ur')?'rtl':'ltr';
+$('#sh').textContent=SHT[L][0];document.querySelectorAll('#totop,.sb-logo').forEach(b=>{b.setAttribute('aria-label',TOPT[L]);b.title=TOPT[L]});document.documentElement.dir=(L==='ar'||L==='ur')?'rtl':'ltr';
 $('#tg').textContent=th()?T.lt:T.dk;
 Object.keys(CAT).forEach(k=>{const b=$('[data-v="'+k+'"]');b.innerHTML=esc(TABS[k][L])+' <small></small>';b.title=XT[k][L]});
 $('[data-v="fav"]').innerHTML=STAR+esc(TABS.fav[L])+' <small id="nf"></small>';$('[data-v="fav"]').title=T.fv;
@@ -392,6 +418,13 @@ $('#sh').onclick=()=>{const u=buildURL(true),b=$('#sh');
 const ok=()=>{b.textContent=SHT[L][1];setTimeout(()=>{b.textContent=SHT[L][0]},1800)};
 if(navigator.share&&matchMedia('(pointer:coarse)').matches){navigator.share({title:document.title,url:u}).catch(()=>{});return}
 (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(ok,()=>{prompt('',u)})};
+{const hq=$('.hq'),slot=$('#hqs'),bar=$('#sbar'),w=bar.firstElementChild,tp=$('#totop');let st=false,tk=false;
+function mv(to){const a=document.activeElement,f=a&&hq.contains(a)?[a,a.selectionStart,a.selectionEnd]:null;
+if(to===w)slot.style.minHeight=slot.offsetHeight+'px';to.appendChild(hq);if(to===slot)slot.style.minHeight='';
+if(f){f[0].focus({preventScroll:true});try{f[0].setSelectionRange(f[1],f[2])}catch(e){}}}
+function fixbar(){tk=false;const s=slot.getBoundingClientRect().bottom<0;if(s!==st){st=s;mv(s?w:slot);bar.classList.toggle('on',s)}tp.hidden=scrollY<500}
+addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(fixbar)}},{passive:true});addEventListener('resize',fixbar);
+const up=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});tp.onclick=up;$('.sb-logo').onclick=up;fixbar()}
 
 </script>
 </body>
