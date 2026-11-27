@@ -311,6 +311,8 @@ background:linear-gradient(135deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.28)
  .hero .hd .sub{grid-column:2/4;grid-row:2;align-self:start}
  .hero header>.hr{grid-column:3;grid-row:1;align-self:end;justify-self:end;margin-bottom:calc((clamp(1.7rem,3.3vw,3.1rem)*.95 - 35px)/2)}
 }
+/* v11: плашка с логотипом всегда 16:9 (как сами картинки 512x288) - одинаковый размер во всех разделах, без обрезки */
+@media (min-width:701px){.grid .tw .t>.publication-mark{flex:0 0 auto;height:auto;aspect-ratio:16/9;min-height:0}}
 </style>
 <script>try{var m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('natw:theme');if(m==='dark'||m==='light')document.documentElement.dataset.theme=m}catch(e){}</script></head>
 <body>
